@@ -169,44 +169,23 @@ Accessed at `/dashboard` (built React SPA):
 
 ---
 
-## Deployment on Vercel
+## Deployment on Render
 
-The repository is configured for **All-in-One deployment on Vercel** (serving the demo storefront, the drop-in tracker, the React dashboard, and the Express API via serverless functions on the same domain):
+This project is designed to run as two separate Render services: one Node.js API service and one static dashboard site. For production, you should use a MongoDB Atlas cluster instead of the in-memory development database.
 
-### 1. Database Prerequisite (MongoDB Atlas)
-Since Vercel Serverless Functions are stateless, you cannot use the dev in-memory MongoDB. You need a free cloud MongoDB:
+### 1. MongoDB Atlas prerequisites
+
+Before deploying to Render, set up a MongoDB Atlas cluster:
+
 1. Create a free cluster at [MongoDB Atlas](https://www.mongodb.com/atlas).
-2. Copy your connection string (e.g. `mongodb+srv://user:password@cluster.mongodb.net/analytics?retryWrites=true&w=majority`).
+2. Create a database user with a username and password using only alphanumeric characters.
+3. Assign the database user a role with read/write access for the target database (for example, `readWrite` on the analytics database).
+4. In **Network Access**, allow connections from `0.0.0.0/0` so Render can reach the database.
+5. Copy the Atlas connection string and keep it ready for the Render API service environment variable.
 
-### 2. Deploy via Vercel Dashboard (GitHub)
-1. Push this repository to GitHub.
-2. Go to [Vercel Dashboard](https://vercel.com/new) and import the repository.
-3. Under **Environment Variables**, add:
-   - `MONGODB_URI` = `your_mongodb_atlas_connection_string`
-4. Leave Root Directory as `./` (Vercel automatically detects `vercel.json` and builds everything).
-5. Click **Deploy**.
 
-### 3. Deploy via Vercel CLI
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy to preview
-vercel
-
-# Add your environment variable
-vercel env add MONGODB_URI
-
-# Deploy to production
-vercel --prod
-```
-
-Once deployed, your Vercel URL will host:
-- `https://your-project.vercel.app/` (Working demo storefront)
-- `https://your-project.vercel.app/tracker.js` (Drop-in tracking script)
-- `https://your-project.vercel.app/dashboard` (React analytics dashboard)
-- `https://your-project.vercel.app/api/*` (Express serverless endpoints)
-
+mongodb+srv://<username>:<password>@<cluster>.mongodb.net/analytics?retryWrites=true&w=majority
 ---
 
 ## Assumptions & Trade-Offs
