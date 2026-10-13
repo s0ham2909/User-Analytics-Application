@@ -1,22 +1,44 @@
 {
-  "buildCommand": "node scripts/build-vercel.js",
-  "outputDirectory": "public",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "dashboard": {
+      "root": "dashboard",
+      "framework": "vite"
+    },
+    "server": {
+      "root": "server"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
-    },
-    {
-      "source": "/api",
-      "destination": "/api"
-    },
-    {
       "source": "/dashboard/(.*)",
-      "destination": "/dashboard/index.html"
+      "destination": {
+        "service": "dashboard"
+      }
     },
     {
       "source": "/dashboard",
-      "destination": "/dashboard/index.html"
+      "destination": {
+        "service": "dashboard"
+      }
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "server"
+      }
+    },
+    {
+      "source": "/api",
+      "destination": {
+        "service": "server"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "server"
+      }
     }
   ]
 }
