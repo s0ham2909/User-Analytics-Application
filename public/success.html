@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Order Confirmed — Acme Store</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="brand">Acme Store</a>
+      <a href="/">Home</a>
+      <a href="/products.html">Products</a>
+      <a href="/#footer">About</a>
+      <a href="/#footer">Contact</a>
+      <a href="/cart.html" id="nav-cart">
+        Cart <span class="cart-badge" style="display: none;">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h1 style="font-size: 28px; margin: 0 0 10px; color: #0f172a;">Order Placed Successfully!</h1>
+      <p style="color: #64748b; font-size: 16px; margin: 0 0 16px;">
+        Thank you for your order. A confirmation email has been dispatched with tracking details.
+      </p>
+
+      <div>
+        <span class="order-badge" id="display-order-id">#ORD-381920</span>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center;">
+        <a class="btn" href="/products.html">Continue Shopping</a>
+        <a class="btn secondary" href="/">Return Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <p>
+      <a href="/">Home</a> · <a href="/products.html">Products</a> ·
+      <a href="/cart.html">Cart</a> · <a href="/#footer">Shipping</a> · <a href="/#footer">Returns</a>
+    </p>
+    <p>Demo page for the Simple User Analytics app.</p>
+  </footer>
+
+  <script src="/cart.js"></script>
+  <script>
+    (function() {
+      var orderId = null;
+      try {
+        orderId = sessionStorage.getItem('last_order_id');
+      } catch (e) {}
+      if (!orderId) {
+        orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+      }
+      document.getElementById('display-order-id').textContent = '#' + orderId;
+    })();
+  </script>
+  <script src="/tracker.js"></script>
+</body>
+</html>

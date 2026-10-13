@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acme Store — Demo</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="brand">Acme Store</a>
+      <a href="/" class="active">Home</a>
+      <a href="/products.html">Products</a>
+      <a href="#footer">About</a>
+      <a href="#footer">Contact</a>
+      <a href="/cart.html" id="nav-cart">
+        Cart <span class="cart-badge" style="display: none;">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Everything for the modern workshop</h1>
+      <p>This is a working demo storefront. Every page view and click on this site is tracked by the analytics app.</p>
+      <div class="hero-actions">
+        <a class="btn" href="/products.html">Shop now</a>
+        <a class="btn ghost" href="#footer">Learn more</a>
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Tools</h3>
+        <p>Drills, saws, and precision gear built to handle any challenge.</p>
+        <a class="btn" href="/products.html">Browse tools</a>
+      </div>
+      <div class="card">
+        <h3>Materials</h3>
+        <p>Fasteners, brackets, and essential finishes for projects of any size.</p>
+        <a class="btn" href="/products.html">Browse materials</a>
+      </div>
+      <div class="card">
+        <h3>Guides</h3>
+        <p>Expert step-by-step project blueprints to inspire your craft.</p>
+        <a class="btn" href="/products.html">Read guides</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <p>
+      <a href="/">Home</a> · <a href="/products.html">Products</a> ·
+      <a href="/cart.html">Cart</a> · <a href="#footer">Shipping</a> · <a href="#footer">Returns</a>
+    </p>
+    <p>Demo page for the Simple User Analytics app.</p>
+  </footer>
+
+  <script src="/cart.js"></script>
+  <script src="/tracker.js"></script>
+</body>
+</html>

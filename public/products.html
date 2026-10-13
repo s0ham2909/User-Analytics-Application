@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products — Acme Store</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="brand">Acme Store</a>
+      <a href="/">Home</a>
+      <a href="/products.html" class="active">Products</a>
+      <a href="/#footer">About</a>
+      <a href="/#footer">Contact</a>
+      <a href="/cart.html" id="nav-cart">
+        Cart <span class="cart-badge" style="display: none;">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Products</h1>
+    <p class="page-subtitle">Add items to your cart. Every click and interaction is tracked seamlessly.</p>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-thumb">🔩</div>
+        <div class="product-info">
+          <h3>Hex Bolt Set</h3>
+          <p class="product-desc">High-grade zinc coated fasteners for heavy framing.</p>
+          <div class="product-meta">
+            <span class="product-price">$9.99</span>
+            <button class="btn btn-add" data-id="hex-bolt" data-name="Hex Bolt Set" data-price="9.99" data-thumb="🔩">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">🔨</div>
+        <div class="product-info">
+          <h3>Claw Hammer</h3>
+          <p class="product-desc">Ergonomic fiberglass handle with tempered steel head.</p>
+          <div class="product-meta">
+            <span class="product-price">$19.99</span>
+            <button class="btn btn-add" data-id="claw-hammer" data-name="Claw Hammer" data-price="19.99" data-thumb="🔨">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">🪚</div>
+        <div class="product-info">
+          <h3>Hand Saw</h3>
+          <p class="product-desc">Precision induction-hardened teeth for smooth cuts.</p>
+          <div class="product-meta">
+            <span class="product-price">$24.50</span>
+            <button class="btn btn-add" data-id="hand-saw" data-name="Hand Saw" data-price="24.50" data-thumb="🪚">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">🪛</div>
+        <div class="product-info">
+          <h3>Screwdriver Kit</h3>
+          <p class="product-desc">6-piece magnetic tip driver set with comfort grip.</p>
+          <div class="product-meta">
+            <span class="product-price">$14.00</span>
+            <button class="btn btn-add" data-id="screwdriver-kit" data-name="Screwdriver Kit" data-price="14.00" data-thumb="🪛">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">📏</div>
+        <div class="product-info">
+          <h3>Measuring Tape</h3>
+          <p class="product-desc">25-foot heavy duty tape measure with auto-lock blade.</p>
+          <div class="product-meta">
+            <span class="product-price">$7.25</span>
+            <button class="btn btn-add" data-id="measuring-tape" data-name="Measuring Tape" data-price="7.25" data-thumb="📏">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">🧰</div>
+        <div class="product-info">
+          <h3>Heavy Toolbox</h3>
+          <p class="product-desc">Reinforced steel latch case with dual storage trays.</p>
+          <div class="product-meta">
+            <span class="product-price">$39.00</span>
+            <button class="btn btn-add" data-id="toolbox" data-name="Heavy Toolbox" data-price="39.00" data-thumb="🧰">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">⚡</div>
+        <div class="product-info">
+          <h3>Cordless Drill</h3>
+          <p class="product-desc">20V brushless motor with 2 lithium-ion batteries.</p>
+          <div class="product-meta">
+            <span class="product-price">$79.99</span>
+            <button class="btn btn-add" data-id="drill" data-name="Cordless Drill" data-price="79.99" data-thumb="⚡">Add to cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb">🥽</div>
+        <div class="product-info">
+          <h3>Safety Goggles</h3>
+          <p class="product-desc">Anti-fog scratch resistant UV protection eye gear.</p>
+          <div class="product-meta">
+            <span class="product-price">$12.50</span>
+            <button class="btn btn-add" data-id="goggles" data-name="Safety Goggles" data-price="12.50" data-thumb="🥽">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <p>
+      <a href="/">Home</a> · <a href="/products.html">Products</a> ·
+      <a href="/cart.html">Cart</a> · <a href="/#footer">Shipping</a> · <a href="/#footer">Returns</a>
+    </p>
+    <p>Demo page for the Simple User Analytics app.</p>
+  </footer>
+
+  <script src="/cart.js"></script>
+  <script>
+    document.querySelectorAll('.btn-add').forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        var id = this.getAttribute('data-id');
+        var name = this.getAttribute('data-name');
+        var price = this.getAttribute('data-price');
+        var thumb = this.getAttribute('data-thumb');
+        window.Cart.addToCart({ id: id, name: name, price: price, thumb: thumb });
+
+        var prevText = this.textContent;
+        this.textContent = 'Added ✓';
+        this.style.background = '#16a34a';
+        this.style.borderColor = '#16a34a';
+        var btn = this;
+        setTimeout(function() {
+          btn.textContent = prevText;
+          btn.style.background = '';
+          btn.style.borderColor = '';
+        }, 800);
+      });
+    });
+  </script>
+  <script src="/tracker.js"></script>
+</body>
+</html>

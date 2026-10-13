@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart — Acme Store</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="brand">Acme Store</a>
+      <a href="/">Home</a>
+      <a href="/products.html">Products</a>
+      <a href="/#footer">About</a>
+      <a href="/#footer">Contact</a>
+      <a href="/cart.html" class="active" id="nav-cart">
+        Cart <span class="cart-badge" style="display: none;">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Your Cart</h1>
+    <p class="page-subtitle">Review items, adjust quantities, and proceed to checkout.</p>
+
+    <div id="cart-content">
+      <!-- Injected by JavaScript -->
+    </div>
+  </main>
+
+  <footer id="footer">
+    <p>
+      <a href="/">Home</a> · <a href="/products.html">Products</a> ·
+      <a href="/cart.html">Cart</a> · <a href="/#footer">Shipping</a> · <a href="/#footer">Returns</a>
+    </p>
+    <p>Demo page for the Simple User Analytics app.</p>
+  </footer>
+
+  <script src="/cart.js"></script>
+  <script>
+    function renderCart() {
+      var container = document.getElementById('cart-content');
+      var cart = window.Cart.getCart();
+
+      if (!cart || cart.length === 0) {
+        container.innerHTML = [
+          '<div class="cart-table-card empty-state">',
+          '  <div class="icon">🛒</div>',
+          '  <h3>Your cart is currently empty</h3>',
+          '  <p>Looks like you haven\'t added any tools or materials yet.</p>',
+          '  <a class="btn" href="/products.html">Explore Products</a>',
+          '</div>'
+        ].join('\n');
+        return;
+      }
+
+      var subtotal = window.Cart.getCartTotal();
+
+      var rows = cart.map(function(item) {
+        var itemTotal = (item.price * item.quantity).toFixed(2);
+        return [
+          '<tr>',
+          '  <td>',
+          '    <div class="cart-item-info">',
+          '      <div class="cart-item-icon">' + (item.thumb || '📦') + '</div>',
+          '      <div>',
+          '        <strong>' + item.name + '</strong>',
+          '        <div style="color: #64748b; font-size: 13px;">$' + item.price.toFixed(2) + ' each</div>',
+          '      </div>',
+          '    </div>',
+          '  </td>',
+          '  <td>',
+          '    <div class="cart-qty-ctrl">',
+          '      <button class="btn-qty-minus" data-id="' + item.id + '" title="Decrease quantity">−</button>',
+          '      <span>' + item.quantity + '</span>',
+          '      <button class="btn-qty-plus" data-id="' + item.id + '" title="Increase quantity">+</button>',
+          '    </div>',
+          '  </td>',
+          '  <td><strong>$' + itemTotal + '</strong></td>',
+          '  <td>',
+          '    <button class="btn btn-sm btn-danger btn-remove" data-id="' + item.id + '">Remove</button>',
+          '  </td>',
+          '</tr>'
+        ].join('\n');
+      }).join('\n');
+
+      container.innerHTML = [
+        '<div class="cart-layout">',
+        '  <div class="cart-table-card">',
+        '    <table class="cart-table">',
+        '      <thead>',
+        '        <tr>',
+        '          <th>Product</th>',
+        '          <th>Quantity</th>',
+        '          <th>Subtotal</th>',
+        '          <th>Action</th>',
+        '        </tr>',
+        '      </thead>',
+        '      <tbody>',
+        rows,
+        '      </tbody>',
+        '    </table>',
+        '  </div>',
+        '  <div class="summary-card">',
+        '    <h3>Order Summary</h3>',
+        '    <div class="summary-row">',
+        '      <span>Items (' + window.Cart.getCartCount() + ')</span>',
+        '      <span>$' + subtotal.toFixed(2) + '</span>',
+        '    </div>',
+        '    <div class="summary-row">',
+        '      <span>Standard Shipping</span>',
+        '      <span style="color: #16a34a; font-weight: 600;">FREE</span>',
+        '    </div>',
+        '    <div class="summary-row total">',
+        '      <span>Total</span>',
+        '      <span style="color: #2563eb;">$' + subtotal.toFixed(2) + '</span>',
+        '    </div>',
+        '    <div class="summary-actions">',
+        '      <a class="btn" href="/checkout.html" id="btn-checkout">Proceed to Checkout</a>',
+        '      <a class="btn secondary" href="/products.html">Continue Shopping</a>',
+        '    </div>',
+        '  </div>',
+        '</div>'
+      ].join('\n');
+
+      attachEvents();
+    }
+
+    function attachEvents() {
+      document.querySelectorAll('.btn-qty-plus').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = this.getAttribute('data-id');
+          window.Cart.updateQuantity(id, 1);
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.btn-qty-minus').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = this.getAttribute('data-id');
+          window.Cart.updateQuantity(id, -1);
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.btn-remove').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = this.getAttribute('data-id');
+          window.Cart.removeFromCart(id);
+          renderCart();
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCart);
+  </script>
+  <script src="/tracker.js"></script>
+</body>
+</html>
