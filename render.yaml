@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: user-analytics-api
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: MONGODB_URI
+        fromSecret: MONGODB_URI
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+  - type: static
+    name: user-analytics-dashboard
+    env: static
+    rootDir: dashboard
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        fromSecret: VITE_API_URL
+        sync: false
